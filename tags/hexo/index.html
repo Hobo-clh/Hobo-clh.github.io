@@ -42,62 +42,6 @@
 
 
 
-    
-        <script>
-  if (typeof MathJax === 'undefined') {
-    window.MathJax = {
-      loader: {
-        
-            load: ['[tex]/mhchem'],
-        
-        source: {
-          '[tex]/amsCd': '[tex]/amscd',
-          '[tex]/AMScd': '[tex]/amscd'
-        }
-      },
-      tex: {
-        inlineMath: {'[+]': [['$', '$']]},
-        
-            packages: {'[+]': ['mhchem']},
-        
-        tags: 'ams'
-      },
-      options: {
-        renderActions: {
-          findScript: [10, doc => {
-            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
-              const display = !!node.type.match(/; *mode=display/);
-              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-              const text = document.createTextNode('');
-              node.parentNode.replaceChild(text, node);
-              math.start = {node: text, delim: '', n: 0};
-              math.end = {node: text, delim: '', n: 0};
-              doc.math.push(math);
-            });
-          }, '', false],
-          insertedScript: [200, () => {
-            document.querySelectorAll('mjx-container').forEach(node => {
-              let target = node.parentNode;
-              if (target.nodeName.toLowerCase() === 'li') {
-                target.parentNode.classList.add('has-jax');
-              }
-            });
-          }, '', false]
-        }
-      }
-    };
-    (function () {
-      var script = document.createElement('script');
-      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
-      script.defer = true;
-      document.head.appendChild(script);
-    })();
-  } else {
-    MathJax.startup.document.state(0);
-    MathJax.texReset();
-    MathJax.typeset();
-  }
-</script>
           
 
 
@@ -225,138 +169,32 @@
   
   <main id="main-contain" class="mdui-container mdui-m-t-5">
     
-    <article class="mdui-card mdui-m-b-5 mdui-p-a-2 mdui-hoverable">    
-      
-      
-        <div class="post-header"> 
-  <a class="post-header-title" href="/2020/01/14/hello-world/">hello world</a>
-  <div class="post-header-meta">
-    <span>
-      <span class="iconfont icon-calendar"></span>
-      发布于:&nbsp;2020-01-14
-    </span>
-    <span>
-      <span class="iconfont icon-calendar-check"></span>
-      更新于:&nbsp;2020-03-16
-    </span>
-    <span>
-      <span class="iconfont icon-folder"></span>
-      分类于:&nbsp;<a class="category-link" href="/categories/helloworld/">helloworld</a>
-    </span>
     
-  </div>
-</div>   
     
 
 
-
-      
-      
-      <div class="mdui-card-content">
-        <p class="post-abstract">
-          
-            
-千辛万苦终于搭建好了我的博客！我的博客也是我的学习记录，我的第一篇博客就来记录一下用hexo和GitHub搭建这个个人博客的过程。
-1、下载nodejs进入nodejs官网下载最新版本
-1$ hexo new "My New Post"
-
-2、注册一个github账号注册一个GitHub账号，创建一个仓库，库名格式：你的GitHub账号名.github.io
-1$ hexo server
-
-More info: Server
-安装git进入git官网下载windows版本的git，安装好。获取
-1$ ssh-keygen -t rsa -C "你注册GitHub时的邮箱号"
-
-打开Gi...
-          
-        </p>
-        
-        <div style="text-align:center;">
-          <a class="post-readmore mdui-btn mdui-ripple mdui-btn-raised" href="/2020/01/14/hello-world/">阅读更多</a>
+<div class="mdui-card mdui-p-a-4 mdui-m-b-5">
+    <div class="posts-collapse">
+        <div class="collection-title">
+            <h2>hexo<small>标签</small></h2>
         </div>
-      </div>
-      
-    <div class="post-tags">
-      
-        <i class="iconfont icon-tag">
-          <a rel="tag" href = /tags/hexo/ >hexo</a>
-        </i>
-      
-        <i class="iconfont icon-tag">
-          <a rel="tag" href = /tags/others/ >others</a>
-        </i>
-      
-    </div>
-
-    </article>
-
-    <article class="mdui-card mdui-m-b-5 mdui-p-a-2 mdui-hoverable">    
-      
-      
-        <div class="post-header"> 
-  <a class="post-header-title" href="/2020/01/14/hexo-GitHub%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/">hexo+GitHub搭建我的博客</a>
-  <div class="post-header-meta">
-    <span>
-      <span class="iconfont icon-calendar"></span>
-      发布于:&nbsp;2020-01-14
-    </span>
-    <span>
-      <span class="iconfont icon-calendar-check"></span>
-      更新于:&nbsp;2020-03-16
-    </span>
-    <span>
-      <span class="iconfont icon-folder"></span>
-      分类于:&nbsp;<a class="category-link" href="/categories/hexo/">hexo</a>
-    </span>
-    
-  </div>
-</div>   
-    
-
-
-
-      
-      
-      <div class="mdui-card-content">
-        <p class="post-abstract">
-          
-            
-
-
-千辛万苦终于搭建好了我的博客！我的博客也是我的学习记录，我的第一篇博客就来记录一下用hexo和GitHub搭建这个个人博客的过程。
-1、下载nodejs进入nodejs官网下载最新版本
-1$ hexo new "My New Post"
-
-2、注册一个github账号注册一个GitHub账号，创建一个仓库，库名格式：你的GitHub账号名.github.io
-1$ hexo server
-
-More info: Server
-安装git进入git官网下载windows版本的git，安装好。获取
-1$ ssh-keygen -t rsa -C "你注册GitHub时的邮箱号"
-
-打开...
-          
-        </p>
         
-        <div style="text-align:center;">
-          <a class="post-readmore mdui-btn mdui-ripple mdui-btn-raised" href="/2020/01/14/hexo-GitHub%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/">阅读更多</a>
-        </div>
-      </div>
-      
-    <div class="post-tags">
-      
-        <i class="iconfont icon-tag">
-          <a rel="tag" href = /tags/hexo/ >hexo</a>
-        </i>
-      
-        <i class="iconfont icon-tag">
-          <a rel="tag" href = /tags/others/ >others</a>
-        </i>
-      
+            <div class="collection-item">
+                <h3><a href="/2020/01/14/hello-world/">hello world</a></h3>
+                <time itemprop="dateCreated" datetime=2020-01-14 >
+                    2020.01.14
+                </time>
+            </div>
+        
+            <div class="collection-item">
+                <h3><a href="/2020/01/14/hexo-GitHub%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/">hexo+GitHub搭建我的博客</a></h3>
+                <time itemprop="dateCreated" datetime=2020-01-14 >
+                    2020.01.14
+                </time>
+            </div>
+        
     </div>
-
-    </article>
-
+</div>
 
 
   </main>
