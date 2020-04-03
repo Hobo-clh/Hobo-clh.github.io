@@ -245,7 +245,7 @@ pre .javascript .function {
 .post-header .post-header-title {
   text-decoration: none;
   display: block;
-  font-size: 24px;
+  font-size: 28px;
   line-height: 36px;
   opacity: 0.87;
 }
@@ -547,7 +547,7 @@ pre .javascript .function {
 }
 .header-subtitle {
   margin: 0;
-  font-size: 18px;
+  font-size: 16px;
 }
 .adsense-contain {
   margin: 10px;
