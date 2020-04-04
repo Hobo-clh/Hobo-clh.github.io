@@ -108,6 +108,8 @@
             Hobo&#39;s blog
         
     </title>
+    
+    
 <meta name="generator" content="Hexo 4.2.0"></head>
 <body class="mdui-drawer-body-left mdui-appbar-with-toolbar mdui-theme-primary-blue-grey mdui-theme-accent-blue">
   
@@ -217,7 +219,29 @@
                 </div>
             
         </div>
+        <ul class="mdui-list" mdui-collapse="{accordion: true}">
+            <li class="mdui-collapse-item">
+                <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+                    <div class="mdui-list-item-icon">
+                        <i class="iconfont icon-link"></i>
+                    </div>
+                    <div class="mdui-list-item-content">友情链接</div>
+                    <div class="mdui-collapse-item-arrow">
+                        <i class="mdui-list-item-icon iconfont icon-angle-down"></i>
+                    </div>
+                </div>
+                <ul class="mdui-collapse-item-body mdui-list mdui-list-dense">
+                    
+                        <a href="http://39.97.226.211/" target="_blank" rel="noopener" class="mdui-list-item mdui-ripple">
+                            Hobo论坛项目
+                        </a>
+                    
+                </ul>
+            </li>
+        </ul>
+
     </div>
+
     <div class="mdui-divider"></div>
     
     
@@ -225,7 +249,7 @@
   
   <main id="main-contain" class="mdui-container mdui-m-t-5">
     
-    <article class="mdui-card mdui-m-b-5 mdui-p-a-2 mdui-hoverable">    
+    <article class="mdui-card mdui-m-b-5 mdui-hoverable">    
       
       
         <div class="post-header"> 
@@ -252,50 +276,35 @@
 
       
       
-      <div class="mdui-card-content">
-        <p class="post-abstract">
+  <div class="post-tags">
+    
+      <i class="iconfont icon-tag">
+        <a rel="tag" href = /tags/Spring-Boot/ >Spring Boot</a>
+      </i>
+    
+      <i class="iconfont icon-tag">
+        <a rel="tag" href = /tags/Java/ >Java</a>
+      </i>
+    
+  </div>
+
+      
+      <div id="achieve-abstract" class="mdui-card-content mdui-p-x-4">
+        <div class="post-abstract mdui-typo ">
           
-            介绍项目地址： Hobo社区服务器：阿里云
-项目技术栈
-后端Spring Boot、MyBatis、mysql
-
-前端使用BootStrap、thymeleaf模板引擎
-
-使用了flyway管理数据库版本，方便迁移数据库
-
-使用MyBatis Generator自动生成mapper、model、xml文件，不用再写sql语句了，极大地提高了开发效率
-
-
-项目功能介绍
-登录功能：使用GitHub第三方登录，也可以表单注册登录（之后会加入QQ第三方登录）
-
-提问：使用了EditorMarkdown编辑器，支持md语法，并且支持上传
-
-
-个人记录model层：直接和数据库表对应dto层：和前端...
+            <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>项目地址： <strong><a href="http://39.97.226.211/" target="_blank" rel="noopener">Hobo社区</a></strong><br>服务器：阿里云</p>
+<h2 id="项目技术栈"><a href="#项目技术栈" class="headerlink" title="项目技术栈"></a>项目技术栈</h2><ul>
+<li><p>后端Spring Boot、MyBatis、my...
           
-        </p>
+          </div>
         
         <div style="text-align:center;">
           <a class="post-readmore mdui-btn mdui-ripple mdui-btn-raised" href="/2020/04/04/Boot%E9%A1%B9%E7%9B%AE/">阅读更多</a>
         </div>
       </div>
-      
-    <div class="post-tags">
-      
-        <i class="iconfont icon-tag">
-          <a rel="tag" href = /tags/Spring-Boot/ >Spring Boot</a>
-        </i>
-      
-        <i class="iconfont icon-tag">
-          <a rel="tag" href = /tags/Java/ >Java</a>
-        </i>
-      
-    </div>
-
     </article>
 
-    <article class="mdui-card mdui-m-b-5 mdui-p-a-2 mdui-hoverable">    
+    <article class="mdui-card mdui-m-b-5 mdui-hoverable">    
       
       
         <div class="post-header"> 
@@ -322,49 +331,44 @@
 
       
       
-      <div class="mdui-card-content">
-        <p class="post-abstract">
+  <div class="post-tags">
+    
+      <i class="iconfont icon-tag">
+        <a rel="tag" href = /tags/maven/ >maven</a>
+      </i>
+    
+      <i class="iconfont icon-tag">
+        <a rel="tag" href = /tags/springboot/ >springboot</a>
+      </i>
+    
+  </div>
+
+      
+      <div id="achieve-abstract" class="mdui-card-content mdui-p-x-4">
+        <div class="post-abstract mdui-typo ">
           
-            发现问题
-新建springboot项目时无法导入jar包
-
-尝试在maven的settings文件中修改maven镜像–&gt;没用
-
-尝试更换maven版本–&gt;没用
-
-如何查看查看log日志发现是
-
-
-
-java.lang.RuntimeException: sun.security.provider.certpath.SunCertPathBuilderException:        unable to find valid certification path to requested target        找不到请求目标的有效证书路径
-
-
-此时就轮到度娘上场了
-
-...
+            <h3 id="发现问题"><a href="#发现问题" class="headerlink" title="发现问题"></a>发现问题</h3><ul>
+<li><p>新建springboot项目时无法导入jar包</p>
+</li>
+<li><p>尝试在maven的settings文件中修改maven镜像–&gt;<strong>没用</strong></p>
+</li>
+<li><p>尝试更换maven版本–&gt;<strong>没用</strong></p>
+</li>
+<li><p>如何查看查看log日志发现是</p>
+</li>
+</ul>
+<blockquote>
+<...
           
-        </p>
+          </div>
         
         <div style="text-align:center;">
           <a class="post-readmore mdui-btn mdui-ripple mdui-btn-raised" href="/2020/03/17/maven-bug%E4%BF%AE%E5%A4%8D/">阅读更多</a>
         </div>
       </div>
-      
-    <div class="post-tags">
-      
-        <i class="iconfont icon-tag">
-          <a rel="tag" href = /tags/maven/ >maven</a>
-        </i>
-      
-        <i class="iconfont icon-tag">
-          <a rel="tag" href = /tags/springboot/ >springboot</a>
-        </i>
-      
-    </div>
-
     </article>
 
-    <article class="mdui-card mdui-m-b-5 mdui-p-a-2 mdui-hoverable">    
+    <article class="mdui-card mdui-m-b-5 mdui-hoverable">    
       
       
         <div class="post-header"> 
@@ -391,47 +395,35 @@ java.lang.RuntimeException: sun.security.provider.certpath.SunCertPathBuilderExc
 
       
       
-      <div class="mdui-card-content">
-        <p class="post-abstract">
+  <div class="post-tags">
+    
+      <i class="iconfont icon-tag">
+        <a rel="tag" href = /tags/hexo/ >hexo</a>
+      </i>
+    
+      <i class="iconfont icon-tag">
+        <a rel="tag" href = /tags/github/ >github</a>
+      </i>
+    
+  </div>
+
+      
+      <div id="achieve-abstract" class="mdui-card-content mdui-p-x-4">
+        <div class="post-abstract mdui-typo ">
           
-            
-
-
-
-首次尝试用GitHub+hexo搭建博客，大概步骤记录一下 
-准备工作安装git和node.js
-git：进入git官网下载
-node.js：进入node.js官网下载
-通过以下命令查看是否安装好了git和node.js12git --version node -v
-
-
-
-在自己的磁盘中创建一个文件夹
-进入该文件夹后，在路径上输入cmd回车，进入dos窗口输入以下命令
-123456789#安装hexonpm install -g hexo-cli #安装hexo完成后，再执行下列命令，Hexo将会在指定文件夹中新建所需要的文件hexo init HoboClhBlogcd Hob...
+            <hr>
+<hr>
+<!-- Welcome to [Hexo](https://hexo.io/)! This is your very first post. Check [documentation](https://hexo.io/docs/) for more info. If you get any problems when using Hexo, you can find the answer in [troubleshooting](https://hexo.io/docs/troubleshooting.html) or you can ask me on [GitH...
           
-        </p>
+          </div>
         
         <div style="text-align:center;">
           <a class="post-readmore mdui-btn mdui-ripple mdui-btn-raised" href="/2020/01/14/hexo-GitHub/">阅读更多</a>
         </div>
       </div>
-      
-    <div class="post-tags">
-      
-        <i class="iconfont icon-tag">
-          <a rel="tag" href = /tags/hexo/ >hexo</a>
-        </i>
-      
-        <i class="iconfont icon-tag">
-          <a rel="tag" href = /tags/github/ >github</a>
-        </i>
-      
-    </div>
-
     </article>
 
-    <article class="mdui-card mdui-m-b-5 mdui-p-a-2 mdui-hoverable">    
+    <article class="mdui-card mdui-m-b-5 mdui-hoverable">    
       
       
         <div class="post-header"> 
@@ -458,27 +450,26 @@ node.js：进入node.js官网下载
 
       
       
-      <div class="mdui-card-content">
-        <p class="post-abstract">
+  <div class="post-tags">
+    
+      <i class="iconfont icon-tag">
+        <a rel="tag" href = /tags/hexo/ >hexo</a>
+      </i>
+    
+  </div>
+
+      
+      <div id="achieve-abstract" class="mdui-card-content mdui-p-x-4">
+        <div class="post-abstract mdui-typo ">
           
-            
-Hello World
+            <!-- Welcome to [Hexo](https://hexo.io/)! This is your very first post. Check [documentation](https://hexo.io/docs/) for more info. If you get any problems when using Hexo, you can find the answer in [troubleshooting](https://hexo.io/docs/troubleshooting.html) or you can ask me on [GitHub](https:...
           
-        </p>
+          </div>
         
         <div style="text-align:center;">
           <a class="post-readmore mdui-btn mdui-ripple mdui-btn-raised" href="/2020/01/13/hello-world/">阅读更多</a>
         </div>
       </div>
-      
-    <div class="post-tags">
-      
-        <i class="iconfont icon-tag">
-          <a rel="tag" href = /tags/hexo/ >hexo</a>
-        </i>
-      
-    </div>
-
     </article>
 
 
@@ -521,7 +512,7 @@ Hello World
  </div>
 </footer>
   
-  <button id="gotop" class="mdui-fab mdui-fab-fixed mdui-fab-hide mdui-ripple mdui-color-teal"><i class="iconfont icon-arrowup"></i></button>
+  <button id="gotop" class="mdui-fab mdui-fab-fixed mdui-fab-hide mdui-ripple mdui-color-teal" style="z-index:100;"><i class="iconfont icon-arrowup"></i></button>
   
   
 

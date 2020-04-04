@@ -6,6 +6,12 @@ body {
 .mdui-card {
   background: #fff;
 }
+h1 {
+  font-size: 1.75em !important;
+}
+h2 {
+  font-size: 1.5em !important;
+}
 /*Dark Mode*/
 .mdui-theme-layout-dark #footer {
   background: #212121;
@@ -240,13 +246,16 @@ pre .javascript .function {
 .post-header {
   text-align: center;
   position: relative;
-  padding: 24px 16px 16px 16px;
+  padding: 40px 16px 0px 16px;
+}
+.mdui-card-media-covered .post-header {
+  padding: 24px;
 }
 .post-header .post-header-title {
   text-decoration: none;
   display: block;
   font-size: 28px;
-  line-height: 36px;
+  line-height: 42px;
   opacity: 0.87;
 }
 .post-header .post-header-title:visited,
@@ -273,7 +282,7 @@ pre .javascript .function {
 .post-tags {
   display: inline-flex;
   position: relative;
-  left: -20px;
+  left: 0px;
   height: 0;
   font-weight: bold;
   color: #fff;
@@ -326,10 +335,6 @@ pre .javascript .function {
 .post-nav-item.mdui-float-left .fa {
   font-size: 12px;
   margin-left: 5px;
-}
-.mdui-card-content .post-abstract {
-  margin: 0 0 20px 0;
-  font-size: 16px;
 }
 .toc-button {
   position: fixed;
@@ -391,9 +396,23 @@ pre .javascript .function {
 .toc ol > ol {
   padding-left: 0;
 }
+#achieve-abstract {
+  padding-bottom: 24px;
+  padding-top: 0px;
+}
+.tag-line-space {
+  padding: 15px;
+}
+#article .mdui-card-content {
+  font-size: 16px;
+}
+.mdui-card-content .post-abstract {
+  margin: 0 0 20px 0;
+  font-size: 16px;
+}
 .posts-collapse {
   position: relative;
-  z-index: 1010;
+  z-index: 100;
   margin-left: 55px;
 }
 .posts-collapse::after {
@@ -547,7 +566,7 @@ pre .javascript .function {
 }
 .header-subtitle {
   margin: 0;
-  font-size: 16px;
+  font-size: 18px;
 }
 .adsense-contain {
   margin: 10px;

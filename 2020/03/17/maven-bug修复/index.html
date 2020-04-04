@@ -52,6 +52,8 @@
             maven-解决新建spring boot项目导入jar包失败的问题 | Hobo&#39;s blog
         
     </title>
+    
+    
 <meta name="generator" content="Hexo 4.2.0"></head>
 <body class="mdui-drawer-body-left mdui-appbar-with-toolbar mdui-theme-primary-blue-grey mdui-theme-accent-blue">
   
@@ -161,14 +163,36 @@
                 </div>
             
         </div>
+        <ul class="mdui-list" mdui-collapse="{accordion: true}">
+            <li class="mdui-collapse-item">
+                <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+                    <div class="mdui-list-item-icon">
+                        <i class="iconfont icon-link"></i>
+                    </div>
+                    <div class="mdui-list-item-content">友情链接</div>
+                    <div class="mdui-collapse-item-arrow">
+                        <i class="mdui-list-item-icon iconfont icon-angle-down"></i>
+                    </div>
+                </div>
+                <ul class="mdui-collapse-item-body mdui-list mdui-list-dense">
+                    
+                        <a href="http://39.97.226.211/" target="_blank" rel="noopener" class="mdui-list-item mdui-ripple">
+                            Hobo论坛项目
+                        </a>
+                    
+                </ul>
+            </li>
+        </ul>
+
     </div>
+
     <div class="mdui-divider"></div>
     
     
 </aside>
   
   <main id="main-contain" class="mdui-container mdui-m-t-5">
-    <article id="article" class="mdui-card mdui-p-a-2 mdui-m-b-5">
+    <article id="article" class="mdui-card mdui-p-b-2 mdui-m-b-5">
   <header class="mdui-card-media">
     
     
@@ -235,20 +259,20 @@
   
   
   
-    <div class="post-tags">
-      
-        <i class="iconfont icon-tag">
-          <a rel="tag" href = /tags/maven/ >maven</a>
-        </i>
-      
-        <i class="iconfont icon-tag">
-          <a rel="tag" href = /tags/springboot/ >springboot</a>
-        </i>
-      
-    </div>
+  <div class="post-tags">
+    
+      <i class="iconfont icon-tag">
+        <a rel="tag" href = /tags/maven/ >maven</a>
+      </i>
+    
+      <i class="iconfont icon-tag">
+        <a rel="tag" href = /tags/springboot/ >springboot</a>
+      </i>
+    
+  </div>
 
   
-  <div class="mdui-card-content mdui-typo">
+  <div class="mdui-card-content mdui-typo mdui-p-x-4">
     <h3 id="发现问题"><a href="#发现问题" class="headerlink" title="发现问题"></a>发现问题</h3><ul>
 <li><p>新建springboot项目时无法导入jar包</p>
 </li>
@@ -285,7 +309,7 @@
   
   <!--页脚广告-->
   
-  </br><div class="mdui-divider-inset"></div>
+  <div class="mdui-divider"></div>
   
   <nav>
     
@@ -306,7 +330,7 @@
 
 
 
-  <div class="toc-button">
+  <div class="toc-button"  style="z-index: 100;">
     <button class="mdui-fab mdui-ripple mdui-color-teal" mdui-menu="{target: '#toc'}"><i class="iconfont icon-list"></i></button>
     <ul class="mdui-menu" id="toc">
       <li class="mdui-menu-item">
@@ -334,7 +358,7 @@
     el: '#vcomments',
     notify: notify,
     verify: verify,
-    appId: 'L7w59tzz1mg3lzAlMa1X8YaJ-gzGzoHsz',
+    appId: '',
     appKey: 'f5kLvcrydFdK780yPqu10vny',
     placeholder: '燥起来啊~',
     pageSize: '10',
@@ -383,7 +407,7 @@
  </div>
 </footer>
   
-  <button id="gotop" class="mdui-fab mdui-fab-fixed mdui-fab-hide mdui-ripple mdui-color-teal"><i class="iconfont icon-arrowup"></i></button>
+  <button id="gotop" class="mdui-fab mdui-fab-fixed mdui-fab-hide mdui-ripple mdui-color-teal" style="z-index:100;"><i class="iconfont icon-arrowup"></i></button>
   
   
 
