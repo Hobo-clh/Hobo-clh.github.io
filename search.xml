@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>jQuery的过滤器</title>
+      <link href="/2020/04/05/jQuery%E8%BF%87%E6%BB%A4%E5%99%A8/"/>
+      <url>/2020/04/05/jQuery%E8%BF%87%E6%BB%A4%E5%99%A8/</url>
+      
+        <content type="html"><![CDATA[<h2 id="1、基本属性过滤器"><a href="#1、基本属性过滤器" class="headerlink" title="1、基本属性过滤器"></a>1、基本属性过滤器</h2><ul><li><p>获取–属性名等于指定值的元素<br>$(“选择器[属性名=值]”)</p></li><li><p>获取–不含指定值的元素<br>$(“选择器[属性名!=’值’]”) </p></li><li><p>获取–指定值开始的元素<br>$(“选择器[属性名^=’值’]”）</p></li><li><p>获取–指定值结束的元素<br>$(“选择器[属性名$=’值’]”）</p></li><li><p>获取–包含指定值的元素<br>$(“选择器[属性名*=’值’]”)</p></li></ul><p><strong>复合属性过滤器</strong><br> $ ([属性过滤器 1] [属性过滤器 2]……[属性过滤器 n]) </p><h2 id="基本过滤器"><a href="#基本过滤器" class="headerlink" title="基本过滤器"></a>基本过滤器</h2><ul><li><p>获取选择器的第一个元素<br>$(“选择器:first”) </p></li><li><p>获取选择器的最后一个元素<br>$(“选择器:last”) </p></li><li><p>$(“选择器:not()”)<br>获取not过滤器可以去除所有与给的选择器匹配的元素<br>例如:<br>$(“div :not([id])”)，除去含有id属性的div<br>$(“li :not(:first)”)，除去第一个li元素</p></li><li><p>$(“选择器:even”)<br>获取索引值为奇数的元素</p></li><li><p>$(“选择器:odd”)<br>获取索引值为偶数的元素</p></li><li><p>$(“选择器:eq(2)”)<br>获取索引值为2的元素</p></li><li><p>$(“选择器:gt(2)”)<br>获取索引值大于2的元素</p></li><li><p>$(“选择器:it(3)”)<br>获取索引值小于3的元素</p></li><li><p>$(“选择器:header”)<br>选择所有 h1、h2、h3 一类的header 标签</p></li></ul><h2 id="内容过滤器："><a href="#内容过滤器：" class="headerlink" title="内容过滤器："></a>内容过滤器：</h2><ul><li><p>contains()<br>使用 :contains() 过滤器可以匹配包含指定文本的元素。<br>例如：$(“div:contains(HTML)”) 可以选择内容包含 HTML 的 div 元素。</p></li><li><p>empty()<br>例如：使用 $(“td:empty”)可以选择内容为空的表格单元格。</p></li><li><p>has()<br>例如： $(“p”).has(“span”)<br>返回拥有一个span元素在其内的所有p元素</p></li><li><p>parent()<br>$(“p”).parent(“.selected”)<br>返回class为selected的p元素</p></li></ul><h2 id="子元素过滤器"><a href="#子元素过滤器" class="headerlink" title="子元素过滤器"></a>子元素过滤器</h2><ul><li><p>nth-child(index/even/odd/eq)<br>$ (“ul li:nth-child(2)”) 可以匹配 ul 元素中的第2个 li 子元素，<br>$ (“ul li:nth-child(even)”) 可以匹配 ul 元素中的第偶数个 li 子元素。</p></li><li><p>first-child<br>可以使用 :first-child 过滤器匹配第一个子元素<br>$ (“ul li:first-child”) 可以匹配 ul 列表中的第一个 li 子元素。</p></li><li><p>last-child<br>:last-child 过滤器匹配最后一个子元素。<br>$ (“ul li:last-child”) 可以匹配 ul 列表中的最后一个 li 子元素。</p></li><li><p>only-child<br>可以使用 :only-child 过滤器匹配父元素的唯一子元素。</p></li></ul><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>简单总结一下jQuery的过滤器，以后如果用到了又忘记了就翻翻这篇博客</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 前端 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> jQuery </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Spring Boot-小型论坛项目</title>
       <link href="/2020/04/04/Boot%E9%A1%B9%E7%9B%AE/"/>
       <url>/2020/04/04/Boot%E9%A1%B9%E7%9B%AE/</url>
@@ -47,9 +72,9 @@
       
         <tags>
             
-            <tag> maven </tag>
+            <tag> Spring Boot </tag>
             
-            <tag> springboot </tag>
+            <tag> maven </tag>
             
         </tags>
       
