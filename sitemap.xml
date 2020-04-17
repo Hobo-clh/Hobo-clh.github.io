@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://hobo-clh.github.io/categories/index.html</loc>
+    
+    <lastmod>2020-04-17T03:12:47.301Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hobo-clh.github.io/tags/index.html</loc>
+    
+    <lastmod>2020-04-17T03:08:30.001Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://hobo-clh.github.io/2020/04/04/Boot%E9%A1%B9%E7%9B%AE/</loc>
     
     <lastmod>2020-04-15T03:54:26.462Z</lastmod>
@@ -16,23 +30,9 @@
   </url>
   
   <url>
-    <loc>https://hobo-clh.github.io/categories/index.html</loc>
-    
-    <lastmod>2020-04-13T03:14:04.721Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://hobo-clh.github.io/link/index.html</loc>
     
     <lastmod>2020-04-13T03:13:44.576Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://hobo-clh.github.io/tags/index.html</loc>
-    
-    <lastmod>2020-04-13T03:13:16.796Z</lastmod>
     
   </url>
   
