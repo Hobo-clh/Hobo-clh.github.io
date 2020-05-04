@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>HashMap在JDK1.7和1.8的区别</title>
+      <link href="/2020/05/04/HashMap%E5%9C%A8JDK1-7%E5%92%8C1-8%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
+      <url>/2020/05/04/HashMap%E5%9C%A8JDK1-7%E5%92%8C1-8%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+      
+        <content type="html"><![CDATA[<h2 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h2><p>JDK1.7中，底层使用数组+链表<br>JDK1.8中，底层使用数组+链表+红黑树</p><h2 id="共同点："><a href="#共同点：" class="headerlink" title="共同点："></a>共同点：</h2><h3 id="容量（capacity）：HashMap中数组的长度"><a href="#容量（capacity）：HashMap中数组的长度" class="headerlink" title="容量（capacity）：HashMap中数组的长度"></a>容量（capacity）：HashMap中数组的长度</h3><ol><li>容量范围：必须是2的幂 &amp; &lt;最大容量（2的30次方）</li><li>初始容量 = 哈希表创建时的容量</li><li>默认容量 = 16 = 1&lt;&lt;4 = 00001中的1向左移4位 = 10000 = 十进制的2^4=16<br><code>static final int DEFAULT_INITIAL_CAPACITY = 1 &lt;&lt; 4;</code></li><li>最大容量 = 2的30次方（若传入的容量过大，将被最大值替换）<br><code>static final int MAXIMUM_CAPACITY = 1 &lt;&lt; 30;</code></li></ol><h3 id="加载因子-Load-factor-：HashMap在其容量自动增加前可达到多满的一种尺度"><a href="#加载因子-Load-factor-：HashMap在其容量自动增加前可达到多满的一种尺度" class="headerlink" title="加载因子(Load factor)：HashMap在其容量自动增加前可达到多满的一种尺度"></a>加载因子(Load factor)：HashMap在其容量自动增加前可达到多满的一种尺度</h3><ol><li>加载因子越大、填满的元素越多 = 空间利用率高、但冲突的机会加大、查找效率变低（因为链表变长了）</li><li>加载因子越小、填满的元素越少 = 空间利用率小、冲突的机会减小、查找效率高（链表不长）</li><li>默认加载因子 = 0.75<br><code>static final float DEFAULT_LOAD_FACTOR = 0.75f;</code></li></ol><h3 id="扩容机制"><a href="#扩容机制" class="headerlink" title="扩容机制"></a>扩容机制</h3><ol><li><p>扩容时resize(2 * table.length)，扩容到原数组长度的2倍。</p></li><li><p>若key == null，则hash(key) = 0，则将该键-值 存放到数组table 中的第1个位置，即table [0]</p></li></ol><h2 id="异同点"><a href="#异同点" class="headerlink" title="异同点"></a>异同点</h2><h3 id="JDK1-7中"><a href="#JDK1-7中" class="headerlink" title="JDK1.7中"></a>JDK1.7中</h3><ul><li><p>使用一个<strong>Entry数组</strong>来存储数据,用key的hashcode取模来决定key会被放到数组里的位置,如果hashcode相同,或者hashcode取模后的结果相同(hash collision),那么这些key会被定位到Entry数组的同一个格子里,这些key会形成一个链表。</p></li><li><p>在hashcode特别差的情况下,比方说所有key的hashcode都相同,这个链表可能会很长,那么put/get操作都可能需要遍历这个链表</p></li><li><p>,也就是说时间复杂度在最差情况下会退化到<strong>O(n)</strong>。</p></li><li><p>发生hash冲突时，新元素插入到链表头中，即新元素总是添加到数组中，就元素移动到链表中。</p></li><li><p>在扩容resize（）过程中，采用单链表的<strong>头插法</strong>，在将旧数组上的数据 转移到 新数组上时，转移操作 = 按旧链表的正序遍历链表、在新链表的头部依次插入，即在转移数据、扩容后，容易出现链表逆序的情况 。</p></li><li><p>HashMap线程不安全的一个重要原因就是：多线程下resize()容易出现死循环，此时若（多线程）并发执行 put（）操作，一旦出现扩容情况，则 容易出现 环形链表，从而在get数据、遍历链表时 <strong>形成死循环（Infinite Loop），即 死锁的状态 。</strong></p><h3 id="JDK1-8中"><a href="#JDK1-8中" class="headerlink" title="JDK1.8中"></a>JDK1.8中</h3></li><li><p>使用一个<strong>Node数组</strong>来存储数据,但这个Node可能是链表结构,也可能是红黑树结构</p></li><li><p>如果插入的key的hashcode相同,那么这些key也会被定位到Node数组的同一个格子里。</p></li><li><p>如果同一个格子里的key不超过8个,使用链表结构存储。</p></li><li><p>如果超过了8个,那么会调用treeifyBin函数,将链表转换为红黑树。</p></li><li><p>那么即使hashcode完全相同,由于红黑树的特点,查找某个特定元素,也只需要O(log n)的开销</p></li><li><p>也就是说put/get的操作的时间复杂度最差只有<strong>O(log n)</strong></p></li><li><p>由于 JDK 1.8 转移数据操作 = 按旧链表的正序遍历链表、<strong>在新链表的尾部依次插入（尾插法）</strong>，所以不会出现链表 逆序、倒置的情况，故不容易出现环形链表的情况 ，但jdk1.8仍是线程不安全的，因为没有加同步锁保护。</p></li><li><p>发生hash冲突后，会优先判断该节点的数据结构式是红黑树还是链表，如果是红黑树，则在红黑树中插入数据，如果是链表，则将数据插入到链表的尾部并判断链表长度是否大于8，如果大于8要转成红黑树，另一还要判断数组长度是否超过阀值</p></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 基础 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Java </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>手写ArrayList（仿照源码）</title>
       <link href="/2020/04/29/%E6%89%8B%E5%86%99ArrayList/"/>
       <url>/2020/04/29/%E6%89%8B%E5%86%99ArrayList/</url>
