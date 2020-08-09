@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>MySQL之索引快速入门</title>
+      <link href="/2020/08/09/MySQL%E4%B9%8B%E7%B4%A2%E5%BC%95%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/"/>
+      <url>/2020/08/09/MySQL%E4%B9%8B%E7%B4%A2%E5%BC%95%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/</url>
+      
+        <content type="html"><![CDATA[<h2 id="索引是什么"><a href="#索引是什么" class="headerlink" title="索引是什么"></a>索引是什么</h2><p>在数据之外，MySQL还维护着满足特定查找算法的数据结构，这些数据结构以某种方式引用着数据，这样就可以在这些数据结构上实现一些高级查找算法。这种数据结构就是索引。<br>简而言之：索引是一种用于<strong>排序和快速查找</strong>的数据结构。<br>索引本身也很大，所以以索引文件的形式存储在磁盘中</p><h3 id="索引优势"><a href="#索引优势" class="headerlink" title="索引优势"></a>索引优势</h3><ol><li>大大加快查找的速度，提高数据的检索效率，减少了数据的IO成本</li><li>加快排序数据的速度，较少了CPU的消耗</li></ol><h3 id="索引劣势"><a href="#索引劣势" class="headerlink" title="索引劣势"></a>索引劣势</h3><ol><li>索引会占用了空间</li><li>索引虽然会增加排序和查找的速度，但是会降低更新、删除、新增数据时的速度，因为MySQL此时不仅仅的要更改表，同时也要对调整表变化后索引的信息</li></ol><h3 id="索引分类"><a href="#索引分类" class="headerlink" title="索引分类"></a>索引分类</h3><ol><li><p>唯一索引：索引列的值必须唯一，但允许有空值</p> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># table为表名，indexName索引名，colum列名</span></span><br><span class="line">CREATE UNIQUE INDEX indexName ON table(column);</span><br><span class="line"><span class="comment"># 或者</span></span><br><span class="line">ALTER table ADD UNIQUE INDEX indexName ON (column);</span><br></pre></td></tr></table></figure></li><li><p>单值索引：即一个索引只包含单个列，一个表可以有多个单列索引</p> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># </span></span><br><span class="line">CREATE INDEX indexName ON table(column);</span><br><span class="line"><span class="comment"># 或者</span></span><br><span class="line">ALTER table ADD INDEX indexName ON (column);</span><br></pre></td></tr></table></figure></li><li><p>复合索引：一个索引包含多个列</p> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CREATE INDEX indexName ON table(column1,column2,...);</span><br><span class="line"><span class="comment"># 或</span></span><br><span class="line">ALTER table ADD INDEX indexName ON (column1,column2,...);</span><br></pre></td></tr></table></figure></li><li><p>全文索引：</p> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CREATE FULLTEXT INDEX indexName ON table(column);</span><br><span class="line"><span class="comment"># 或者</span></span><br><span class="line">ALTER TABLE table ADD FULLTEXT indexName ON (column);</span><br></pre></td></tr></table></figure></li></ol><h3 id="什么情况下需要用索引"><a href="#什么情况下需要用索引" class="headerlink" title="什么情况下需要用索引"></a>什么情况下需要用索引</h3><ol><li>主键会自动创建唯一索引</li><li>频繁作为查询条件的字段需要创建索引</li><li>查询中与其他表关联的字段，外键关系建立索引</li><li>查询中排序的字段，排序字段若通过索引去访问将大大提高排序速度</li><li>查询中统计或分组字段<h3 id="什么情况下不需要用索引"><a href="#什么情况下不需要用索引" class="headerlink" title="什么情况下不需要用索引"></a>什么情况下不需要用索引</h3></li><li>表的数据太少</li><li>经常增删改的字段不需要创建索引<br> 索引提高了查询速度，同时会降低更新表的速度，如对表进行 insert , update , delete 因为表更新时，<br>MySQL 不仅仅要保存数据，还要保存索引文件。</li><li>数据重复，且分布平均的表字段，因此应该只为最经常查询和最经常排序的数据列建立索引。<br>如果某个数据列包含多个重复的内容，为它建立索引就没有太大的实际效果。</li></ol><h2 id="索引失效原因总结"><a href="#索引失效原因总结" class="headerlink" title="索引失效原因总结"></a>索引失效原因总结</h2><ol><li>最佳左前缀法则：</li></ol><blockquote><pre><code>如果索引了多列，需要准守最左前缀法则，指的是查询从索引的最左前列开始并且 不跳过索引中的列。</code></pre></blockquote><ol start="2"><li>不在索引列上左任何操作 （计算、函数、（自动 or 手动）类型转换）， 会导致索引失效而转向全表扫描</li><li>存储引擎不能使用索引中范围条件右边的列</li><li>尽量使用覆盖索引（只访问索引的查询（索引列和查询列一致）），减少 select *</li><li>mysql 在适应不等于 （!= 或者 &lt;&gt;）的时候无法使用索引会导致全表扫描</li><li>is null, is not null 也无法使用索引</li><li>ike 以通配符开头 （’%abc …’）mysql 索引失效会变成全表扫描的操作</li><li>字符串不加单引号索引失效</li><li>少用 or, 用它来连接时会索引失效</li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> MySQL </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 索引 </tag>
+            
+            <tag> MySQL </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>CentOS虚拟机配置桥接网卡</title>
       <link href="/2020/08/05/CentOS%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%85%8D%E7%BD%AE%E6%A1%A5%E6%8E%A5%E7%BD%91%E5%8D%A1/"/>
       <url>/2020/08/05/CentOS%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%85%8D%E7%BD%AE%E6%A1%A5%E6%8E%A5%E7%BD%91%E5%8D%A1/</url>
