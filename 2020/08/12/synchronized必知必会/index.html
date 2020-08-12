@@ -1,0 +1,193 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>synchronized必知必会 | Hobo's blog</title><meta name="description" content="synchronized必知必会"><meta name="author" content="Hobo"><meta name="copyright" content="Hobo"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/blogger.ico"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="crossorigin"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="twitter:card" content="summary"><meta name="twitter:title" content="synchronized必知必会"><meta name="twitter:description" content="synchronized必知必会"><meta name="twitter:image" content="https://hobo-clh.github.io/img/post.jpg"><meta property="og:type" content="article"><meta property="og:title" content="synchronized必知必会"><meta property="og:url" content="https://hobo-clh.github.io/2020/08/12/synchronized%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/"><meta property="og:site_name" content="Hobo's blog"><meta property="og:description" content="synchronized必知必会"><meta property="og:image" content="https://hobo-clh.github.io/img/post.jpg"><script src="https://cdn.jsdelivr.net/npm/js-cookie/dist/js.cookie.min.js"></script><script>var autoChangeMode = '1'
+var t = Cookies.get("theme")
+if (autoChangeMode == '1'){
+  var isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
+  var isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches
+  var isNotSpecified = window.matchMedia("(prefers-color-scheme: no-preference)").matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined){
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport){
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour < 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+  }
+  } else if (t == 'light') activateLightMode()
+  else activateDarkMode()
+
+} else if (autoChangeMode == '2'){
+  now = new Date();
+  hour = now.getHours();
+  isNight = hour < 6 || hour >= 18
+  if(t === undefined) isNight? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode() 
+} else {
+  if ( t == 'dark' ) activateDarkMode()
+  else if ( t == 'light') activateLightMode()
+}
+
+function activateDarkMode(){
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+    document.querySelector('meta[name="theme-color"]').setAttribute('content','#000')
+  }
+}
+function activateLightMode(){
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+  document.querySelector('meta[name="theme-color"]').setAttribute('content','#fff')
+  }
+}</script><link rel="stylesheet" href="/css/index.css" ><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css"><link rel="canonical" href="https://hobo-clh.github.io/2020/08/12/synchronized%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/"><link rel="next" title="MySQL之索引快速入门" href="https://hobo-clh.github.io/2020/08/09/MySQL%E4%B9%8B%E7%B4%A2%E5%BC%95%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"cookieDomain":"https://hobo-clh.github.io/","msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简"},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: true,
+  copyright: undefined,
+  ClickShowText: {"text":"本人,超帥,吊啊,Hobo","fontSize":"18px"},
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: {"bookmark":{"message_prev":"按","message_next":"键将本页加入书签"},"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#2d3035","position":"bottom-left"},
+  baiduPush: true,
+  highlightCopy: true,
+  highlightLang: true,
+  highlightShrink: 'false',
+  isFontAwesomeV5: false,
+  isPhotoFigcaption: false
+  
+}</script><script>var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isSidebar: true  
+  }</script><noscript><style>
+#page-header {
+  opacity: 1
+}
+.justified-gallery img{
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 4.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/hobo.gif" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">32</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">26</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">11</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 类别</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> 娱乐</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div></div></div></div><i class="fa fa-arrow-right on" id="toggle-sidebar" aria-hidden="true">     </i><div id="sidebar"><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#synchronized原理"><span class="toc-number">1.</span> <span class="toc-text">synchronized原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#synchronized简介"><span class="toc-number">1.1.</span> <span class="toc-text">synchronized简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#synchronized实现原理"><span class="toc-number">1.2.</span> <span class="toc-text">synchronized实现原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Monitor机制（重量级锁）"><span class="toc-number">1.2.1.</span> <span class="toc-text">Monitor机制（重量级锁）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JDK1-6之后对synchronized的优化"><span class="toc-number">1.3.</span> <span class="toc-text">JDK1.6之后对synchronized的优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#轻量级锁"><span class="toc-number">1.3.1.</span> <span class="toc-text">轻量级锁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CAS自旋锁（乐观锁）"><span class="toc-number">1.3.2.</span> <span class="toc-text">CAS自旋锁（乐观锁）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#锁膨胀"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">锁膨胀</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#偏向锁"><span class="toc-number">1.3.3.</span> <span class="toc-text">偏向锁</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#撤销-调用hashcode方法"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">撤销-调用hashcode方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#撤销-调用wait-notify方法"><span class="toc-number">1.3.3.2.</span> <span class="toc-text">撤销-调用wait&#x2F;notify方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#批量重偏向"><span class="toc-number">1.3.3.3.</span> <span class="toc-text">批量重偏向</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#批量撤销"><span class="toc-number">1.3.3.4.</span> <span class="toc-text">批量撤销</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#锁升级的过程"><span class="toc-number">1.4.</span> <span class="toc-text">锁升级的过程</span></a></li></ol></li></ol></div></div></div><div id="body-wrap"><div class="post-bg" id="nav" style="background-image: url(/img/post.jpg)"><div id="page-header"><span class="pull_left" id="blog_name"><a class="blog_title" id="site-name" href="/">Hobo's blog</a></span><span class="pull_right menus"><div id="search_button"><a class="site-page social-icon search"><i class="fa fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 类别</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> 娱乐</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/movies/"><i class="fa-fw fa fa-film"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-heart"></i><span> 关于</span></a></div></div><span class="toggle-menu close"><a class="site-page"><i class="fa fa-bars fa-fw" aria-hidden="true"></i></a></span></span></div><div id="post-info"><div id="post-title"><div class="posttitle">synchronized必知必会</div></div><div id="post-meta"><div class="meta-firstline"><time class="post-meta__date"><span class="post-meta__date-created" title="发表于 2020-08-12 09:27:51"><i class="fa fa-calendar" aria-hidden="true"></i> 发表于 2020-08-12</span><span class="post-meta__separator">|</span><span class="post-meta__date-updated" title="更新于 2020-08-12 09:31:53"><i class="fa fa-history" aria-hidden="true"></i> 更新于 2020-08-12</span></time></div><div class="meta-secondline"> <span class="post-meta-wordcount"><i class="post-meta__icon fa fa-file-word-o" aria-hidden="true"></i><span>字数总计:</span><span class="word-count">1.7k</span><span class="post-meta__separator">|</span><i class="post-meta__icon fa fa-clock-o" aria-hidden="true"></i><span>阅读时长: 5 分钟</span></span></div><div class="meta-thirdline"><span class="post-meta-pv-cv"><span class="post-meta__separator">|</span><i class="fa fa-eye post-meta__icon" aria-hidden="true"> </i><span>阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-commentcount"><span class="post-meta__separator">|</span><i class="post-meta__icon fa fa-comment-o" aria-hidden="true"></i><span>评论数:</span><a href="/2020/08/12/synchronized%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count comment-count" data-xid="/2020/08/12/synchronized%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/" itemprop="commentCount"></span></a></span></div></div></div></div><main class="layout_post" id="content-inner"><article id="post"><div id="article-container"><h1 id="synchronized原理"><a href="#synchronized原理" class="headerlink" title="synchronized原理"></a>synchronized原理</h1><h2 id="synchronized简介"><a href="#synchronized简介" class="headerlink" title="synchronized简介"></a>synchronized简介</h2><p>synchronized作为java中的一个关键字，它有以下用途</p>
+<ul>
+<li><p>修饰在静态方法上</p>
+<p>静态方法是可以通过类名直接调用，所以实际上就是对调用方法的类加锁，俗称类锁</p>
+</li>
+<li><p>修饰在成员方法上</p>
+<p>成员方法是只能提供类的实例进行调用，所以实际上就是对调用方法的对象加锁，俗称对象锁</p>
+</li>
+<li><p>修饰在代码块上</p>
+<p>根据传入的是类对象或类实例判断加锁方式</p>
+</li>
+</ul>
+<blockquote>
+<p>类锁：为什么可以对类上锁，因为每个java类在jvm中都会有一个真正的class对象，这个class对象就是一个普通的对象，所以类锁和对象所是一致的</p>
+</blockquote>
+<h2 id="synchronized实现原理"><a href="#synchronized实现原理" class="headerlink" title="synchronized实现原理"></a>synchronized实现原理</h2><p>对象头&gt;</p>
+<p>对象被创建后，随即会在在堆中为其分配内存空间，对象在内存中的布局分为三块区域：对象头、实例数据和对齐填充。</p>
+<p>其中对象头又分成了三块区域</p>
+<ul>
+<li><p>Mark Word</p>
+</li>
+<li><p>指向类的指针</p>
+</li>
+<li><p>数组长度（只有数组对象才有）</p>
+</li>
+</ul>
+<p><img src="/" class="lazyload" data-src="/2020/08/12/synchronized%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/%E5%AF%B9%E8%B1%A1%E5%A4%B4.png"  alt="image-20200811003015388"></p>
+<h3 id="Monitor机制（重量级锁）"><a href="#Monitor机制（重量级锁）" class="headerlink" title="Monitor机制（重量级锁）"></a>Monitor机制（重量级锁）</h3><p>Monitor 被翻译为监视器或管程，也叫做监视器锁（重量级锁） 每个 Java 对象都可以关联一个 Monitor 对象，如果使用 synchronized 给对象上锁（重量级）之后，该对象头的 Mark Word 就被设置为指向 Monitor 对象的指针</p>
+<ul>
+<li><p>刚开始 Monitor 中 Owner 为 null </p>
+</li>
+<li><p>当有一个线程1执行到synchronized(obj)时就会将Monitor的持有者设置成线程1，而Monitor中只能有一 个 Owner</p>
+</li>
+<li><p>当其他的线程也来执行synchronized(obj)时，就会进入EntryList被阻塞，处于BLOCKED状态</p>
+</li>
+<li><p>当线程1执行完同步代码块的内容后，会释放锁然后唤醒EntryList中等待的线程来竞争锁，非公平状态</p>
+</li>
+</ul>
+<blockquote>
+<p>注意：</p>
+<ul>
+<li><p>synchronized 必须是进入同一个对象的 monitor 才有上述的效果 </p>
+</li>
+<li><p>不加 synchronized 的对象不会关联监视器，不遵从以上规则</p>
+</li>
+</ul>
+<p>公平锁概念：</p>
+<ul>
+<li><p>公平锁：获取不到锁的时候，会自动加入队列，等待线程释放后，队列的第一个线程获取锁</p>
+</li>
+<li><p>非公平锁：获取不到锁的时候，会自动加入队列，等待线程释放锁后所有等待的线程同时去竞争</p>
+</li>
+</ul>
+<p>ObjectMonitor中有两个队列，_WaitSet 和 _EntryList，用来保存ObjectWaiter对象列表（每个等待锁的线程都会被封装成ObjectWaiter对象），_owner指向持有ObjectMonitor对象的线程，当多个线程同时访问一段同步代码时，首先会进入 _EntryList 集合，当线程获取到对象的monitor 后进入 _Owner 区域并把monitor中的owner变量设置为当前线程同时monitor中的计数器count加1，若线程调用 wait() 方法，将释放当前持有的monitor，owner变量恢复为null，count自减1，同时该线程进入 WaitSe t集合中等待被唤醒。若当前线程执行完毕也将释放monitor(锁)并复位变量的值，以便其他线程进入获取monitor(锁)</p>
+</blockquote>
+<p><img src="/" class="lazyload" data-src="/2020/08/12/synchronized%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/syn3.png"  alt="image-20200811001330019"></p>
+<h2 id="JDK1-6之后对synchronized的优化"><a href="#JDK1-6之后对synchronized的优化" class="headerlink" title="JDK1.6之后对synchronized的优化"></a>JDK1.6之后对synchronized的优化</h2><p>锁的状态总共有四种，<strong>无锁状态</strong>、<strong>偏向锁</strong>、<strong>轻量级锁</strong>和<strong>重量级锁</strong>。随着锁的竞争，锁可以从偏向锁升级到轻量级锁，再升级的重量级锁，但是锁的升级是单向的，也就是说只能从低到高升级，不会出现锁的降级，关于重量级锁，前面我们已详细分析过，下面我们将介绍偏向锁和轻量级锁以及JVM的其他优化手段</p>
+<h3 id="轻量级锁"><a href="#轻量级锁" class="headerlink" title="轻量级锁"></a>轻量级锁</h3><p>轻量级锁的使用场景：如果一个对象虽然有多线程要加锁，但加锁的时间是错开的（也就是没有竞争），那么可以 使用轻量级锁来优化。</p>
+<p>轻量级锁对使用者是透明的，即语法仍然是 synchronized</p>
+<ul>
+<li><p>创建锁记录（Lock Record）对象，每个线程都的栈帧都会包含一个锁记录的结构，内部可以存储锁定对象的 Mark Word</p>
+<p><img src="/" class="lazyload" data-src="/2020/08/12/synchronized%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/cyn1.png"  alt="image-20200811002827603"></p>
+</li>
+<li><p>让锁记录中 Object reference 指向锁对象，并尝试用 cas 替换 Object 的 Mark Word，将 Mark Word 的值存 入锁记录</p>
+<p><img src="/" class="lazyload" data-src="/2020/08/12/synchronized%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/syn5.png"  alt="image-20200811002855462"></p>
+</li>
+<li><p>如果 cas 替换成功，对象头中存储了 锁记录地址和状态 00 ，表示由该线程给对象加锁，这时图示如下</p>
+<p><img src="/" class="lazyload" data-src="/2020/08/12/synchronized%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/syn6.png"  alt="image-20200811003144728"></p>
+</li>
+<li><p>如果 cas 失败，有两种情况 </p>
+<ul>
+<li>如果是其它线程已经持有了该 Object 的轻量级锁，这时表明有竞争，进入锁膨胀过程 </li>
+<li>如果是自己执行了 synchronized 锁重入，那么再添加一条 Lock Record 作为重入的计数</li>
+</ul>
+</li>
+</ul>
+<p><img src="/" class="lazyload" data-src="/2020/08/12/synchronized%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/syn7.png"  alt="image-20200811003218604"></p>
+<h3 id="CAS自旋锁（乐观锁）"><a href="#CAS自旋锁（乐观锁）" class="headerlink" title="CAS自旋锁（乐观锁）"></a>CAS自旋锁（乐观锁）</h3><p>重量级锁竞争的时候，还可以使用自旋来进行优化，如果当前线程自旋成功（即这时候持锁线程已经退出了同步 块，释放了锁），这时当前线程就可以避免阻塞。</p>
+<h4 id="锁膨胀"><a href="#锁膨胀" class="headerlink" title="锁膨胀"></a>锁膨胀</h4><p>如果在尝试加轻量级锁的过程中，CAS 操作无法成功，这时一种情况就是有其它线程为此对象加上了轻量级锁（有 竞争），这时需要进行锁膨胀，将轻量级锁变为重量级锁</p>
+<h3 id="偏向锁"><a href="#偏向锁" class="headerlink" title="偏向锁"></a>偏向锁</h3><p>轻量级锁在没有竞争时（就自己这个线程），每次重入仍然需要执行 CAS 操作。</p>
+<p>Java 6 中引入了偏向锁来做进一步优化：只有第一次使用 CAS 将线程 ID 设置到对象的 Mark Word 头，之后发现 这个线程 ID 是自己的就表示没有竞争，不用重新 CAS。以后只要不发生竞争，这个对象就归该线程所有</p>
+<h4 id="撤销-调用hashcode方法"><a href="#撤销-调用hashcode方法" class="headerlink" title="撤销-调用hashcode方法"></a>撤销-调用hashcode方法</h4><p>因为对象在调用hashcode方法后会将其hashcode值存入之MarkWord中，会占用31位替换掉线程id，导致偏向锁被撤销</p>
+<h4 id="撤销-调用wait-notify方法"><a href="#撤销-调用wait-notify方法" class="headerlink" title="撤销-调用wait/notify方法"></a>撤销-调用wait/notify方法</h4><p>如果对象虽然被多个线程访问，但没有竞争，这时偏向了线程 T1 的对象仍有机会重新偏向 T2，重偏向会重置对象 的 Thread ID</p>
+<h4 id="批量重偏向"><a href="#批量重偏向" class="headerlink" title="批量重偏向"></a>批量重偏向</h4><p>当撤销偏向锁阈值超过 20 次后，jvm 会这样觉得，我是不是偏向错了呢，于是会在给这些对象加锁时重新偏向至 加锁线程</p>
+<h4 id="批量撤销"><a href="#批量撤销" class="headerlink" title="批量撤销"></a>批量撤销</h4><p>当撤销偏向锁阈值超过 40 次后，jvm 会这样觉得，自己确实偏向错了，根本就不该偏向。于是整个类的所有对象 都会变为不可偏向的，新建的对象也是不可偏向的</p>
+<h2 id="锁升级的过程"><a href="#锁升级的过程" class="headerlink" title="锁升级的过程"></a>锁升级的过程</h2><p>无锁–偏向锁–轻量锁–重量锁</p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Hobo</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://hobo-clh.github.io/2020/08/12/synchronized%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/">https://hobo-clh.github.io/2020/08/12/synchronized%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://hobo-clh.github.io" target="_blank">Hobo's blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/post.jpg" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"/><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js"></script></div></div><div class="post-reward"><a class="reward-button button--primary button--animated"> <i class="fa fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><img class="lazyload post-qr-code__img" src="/img/wechat.png" alt="微信"/><div class="post-qr-code__desc">微信</div></li><li class="reward-item"><img class="lazyload post-qr-code__img" src="/img/alipay.jpg" alt="支付宝"/><div class="post-qr-code__desc">支付宝</div></li></ul></div></a></div><nav class="pagination_post" id="pagination"><div class="next-post pull-full"><a href="/2020/08/09/MySQL%E4%B9%8B%E7%B4%A2%E5%BC%95%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/"><img class="next_cover lazyload" data-src="/img/cover/MYSQL.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">MySQL之索引快速入门</div></div></a></div></nav><hr><div id="post-comment"><div class="comment_headling"><i class="fa fa-comments fa-fw" aria-hidden="true"></i><span> 评论</span></div><div class="vcomment" id="vcomment"></div><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+
+window.valine = new Valine({
+  el:'#vcomment',
+  notify: false,
+  verify: false,
+  appId: 'L7w59tzz1mg3lzAlMa1X8YaJ-gzGzoHsz',
+  appKey: 'f5kLvcrydFdK780yPqu10vny',
+  placeholder: '燥起来啊~',
+  avatar: 'monsterid',
+  meta: guest_info,
+  pageSize: '10',
+  lang: 'zh-cn',
+  recordIP: false,
+  serverURLs: ''
+});</script></div></article></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2020 By Hobo</div><div class="framework-info"><span>驱动 </span><a href="https://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener"><span>Butterfly</span></a></div><div class="footer_custom_text">Hi, welcome to my <a href="http://hobo-clh.github.io//">blog</a>! 湘ICP备<a href="http://www.beian.miit.gov.cn/" target="_blank" rel="noopener">-20007724号</a></div></div></footer></div><section class="rightside" id="rightside"><div id="rightside-config-hide"><i class="fa fa-book" id="readmode" title="阅读模式"></i><i class="fa fa-plus" id="font_plus" title="放大字体"></i><i class="fa fa-minus" id="font_minus" title="缩小字体"></i><a class="translate_chn_to_cht" id="translateLink" href="javascript:translatePage();" title="简繁转换" target="_self">繁</a><i class="darkmode fa fa-moon-o" id="darkmode" title="夜间模式"></i></div><div id="rightside-config-show"><div id="rightside_config" title="设置"><i class="fa fa-cog" aria-hidden="true"></i></div><a id="to_comment" href="#post-comment" title="直达评论"><i class="scroll_to_comment fa fa-comments">  </i></a><i class="fa fa-list-ul close" id="mobile-toc-button" title="目录" aria-hidden="true"></i><i class="fa fa-arrow-up" id="go-up" title="回到顶部" aria-hidden="true"></i></div></section><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a href="https://github.com/wzpan/hexo-generator-search" target="_blank" rel="noopener" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js" ></script><script src="/js/utils.js" ></script><script src="/js/main.js" ></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script id="ribbon_piao" mobile="false" src="/js/third-party/piao.js"></script><script src="/js/third-party/activate-power-mode.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+document.body.addEventListener('input', POWERMODE);
+</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@latest/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/lazysizes@latest/lazysizes.min.js" async=""></script><script src="/js/third-party/ClickShowText.js"></script><script src="/js/search/local-search.js"></script></body></html>
