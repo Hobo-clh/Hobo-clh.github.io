@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>Redis主从模式+哨兵配置</title>
+      <link href="/2020/09/22/Redis%E4%B8%BB%E4%BB%8E%E6%A8%A1%E5%BC%8F-%E5%93%A8%E5%85%B5%E9%85%8D%E7%BD%AE/"/>
+      <url>/2020/09/22/Redis%E4%B8%BB%E4%BB%8E%E6%A8%A1%E5%BC%8F-%E5%93%A8%E5%85%B5%E9%85%8D%E7%BD%AE/</url>
+      
+        <content type="html"><![CDATA[<h3 id="集群搭建"><a href="#集群搭建" class="headerlink" title="集群搭建"></a>集群搭建</h3><h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><p>复制多个配置文件</p><ul><li>更改端口号</li><li>pid名字   <code>pidfile /var/run/redis_6379.pid</code></li><li>log文件名  <code>logfile</code></li><li>dump.rdb文件名 <code>dbfilename dump6379.rdb</code></li></ul><h4 id="一主二从"><a href="#一主二从" class="headerlink" title="一主二从"></a>一主二从</h4><p><font color="red">默认情况下，每台Redis服务器都是主节点 </font>； 我们一般情况下只用配置从机就好了！ </p><p>认老大！ 一主 （79）二从（80，81）</p><p>使用在客户端里使用命令<code>slaveof host post</code>  host为主机地址，post为主机端口号</p><p>配置完后可以使用<code>info replication</code> 查看主从机 </p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; info replication</span><br><span class="line"><span class="comment"># Replication</span></span><br><span class="line">role:master</span><br><span class="line">connected_slaves:2</span><br><span class="line">slave0:ip=127.0.0.1,port=6380,state=online,offset=70,lag=0</span><br><span class="line">slave1:ip=127.0.0.1,port=6381,state=online,offset=70,lag=0</span><br><span class="line">master_replid:804daedebab98a129b014a75f7b46619c0041498</span><br><span class="line">master_replid2:0000000000000000000000000000000000000000</span><br><span class="line">master_repl_offset:70</span><br><span class="line">second_repl_offset:-1</span><br><span class="line">repl_backlog_active:1</span><br><span class="line">repl_backlog_size:1048576</span><br><span class="line">repl_backlog_first_byte_offset:1</span><br><span class="line">repl_backlog_histlen:70</span><br><span class="line">127.0.0.1:6379&gt;</span><br></pre></td></tr></table></figure><p><strong>配置文件配置</strong>：<code>replicaof &lt;masterip&gt; &lt;masterport&gt;</code></p><p>如果主机有密码：<code>masterauth &lt;master-password&gt;</code></p><blockquote><p>配置完后，主机可以读写，从机只能读（redis已经默认帮我们配置好了）</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6381&gt; <span class="built_in">set</span> k2 v2</span><br><span class="line">(error) READONLY You can<span class="string">'t write against a read only replica.</span></span><br></pre></td></tr></table></figure></blockquote><p><strong>测试</strong></p><ul><li><p>主机宕机后又恢复连接，再次set值时，从机能获取吗，可以</p><p>reids的高可用性质</p></li></ul><p>测试：主机断开连接，从机依旧连接到主机的，但是没有写操作，这个时候，主机如果回来了，从机依 旧可以直接获取到主机写的信息！ 如果是使用命令行，来配置的主从，这个时候如果重启了，就会变回主机！只要变为从机，立马就会从 主机中获取值！</p><ul><li>如果使用命令配置的主从，从机重启后会变回主机，<strong>只要便会从机数据会立马复制回来</strong></li></ul><blockquote><p> 复制原理</p></blockquote><p>Slave 启动成功连接到 master 后会发送一个sync同步命令 </p><p>Master 接到命令启动后台的存盘进程(RDB)，同时收集所有接收到的用于修改数据集命令，在后台进程执行 完毕之后，<strong>master将传送整个数据文件到slave，并完成一次完全同步。</strong></p><p>全量复制：而slave服务在接收到数据库文件数据后，将其存盘并加载到内存中。</p><p> 增量复制：Master 继续将新的所有收集到的修改命令依次传给slave，完成同步 </p><p>但是只要是重新连接master，一次完全同步（全量复制）将被自动执行！ 我们的数据一定可以在从机中 看到！</p><h4 id="从机自己想当老大"><a href="#从机自己想当老大" class="headerlink" title="从机自己想当老大"></a>从机自己想当老大</h4><p><code>slaveof no one</code></p><h4 id="哨兵模式配置"><a href="#哨兵模式配置" class="headerlink" title="哨兵模式配置"></a>哨兵模式配置</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vim sentinel.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># sentinel monitor 被监控的名称 host port 1</span></span><br><span class="line">sentinel monitor myredis 127.0.0.1 6379 1</span><br></pre></td></tr></table></figure><p>后面的这个数字1，代表主机挂了，slave投票看让谁接替成为主机，票数最多的，就会成为主机！</p><p><img src="/" class="lazyload" data-src="/2020/09/22/Redis%E4%B8%BB%E4%BB%8E%E6%A8%A1%E5%BC%8F-%E5%93%A8%E5%85%B5%E9%85%8D%E7%BD%AE/C:%5CUsers%5CHobo%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200821002051716.png"  alt="image-20200821002051716"></p><p>当主机挂掉后，会选举一个从机为主机</p><p>主机回来后，也会变成从机</p><p><img src="/" class="lazyload" data-src="/2020/09/22/Redis%E4%B8%BB%E4%BB%8E%E6%A8%A1%E5%BC%8F-%E5%93%A8%E5%85%B5%E9%85%8D%E7%BD%AE/C:%5CUsers%5CHobo%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200821002357167.png"  alt="image-20200821002357167"></p><h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ul><li>redis配置文件中 protected-mode yes 修改为 no</li><li>哨兵配置文件中 <code>sentinel monitor myredis 127.0.0.1 6379 1</code> host应该会服务器的ip地址</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> Redis </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Redis </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>原码、补码、反码的关系</title>
       <link href="/2020/09/17/%E5%8E%9F%E7%A0%81%E3%80%81%E8%A1%A5%E7%A0%81%E3%80%81%E5%8F%8D%E7%A0%81%E7%9A%84%E5%85%B3%E7%B3%BB/"/>
       <url>/2020/09/17/%E5%8E%9F%E7%A0%81%E3%80%81%E8%A1%A5%E7%A0%81%E3%80%81%E5%8F%8D%E7%A0%81%E7%9A%84%E5%85%B3%E7%B3%BB/</url>
