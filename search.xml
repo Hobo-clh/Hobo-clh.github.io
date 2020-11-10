@@ -4,6 +4,60 @@
   
     
     <entry>
+      <title>Windows下批处理命令</title>
+      <link href="/2020/11/10/Windows%E4%B8%8B%E6%89%B9%E5%A4%84%E7%90%86%E5%91%BD%E4%BB%A4/"/>
+      <url>/2020/11/10/Windows%E4%B8%8B%E6%89%B9%E5%A4%84%E7%90%86%E5%91%BD%E4%BB%A4/</url>
+      
+        <content type="html"><![CDATA[<hr><p>在Windows下，每次启动项目都要启动多个CMD来打开rabbitmq服务和elasticsearch服务，操作繁琐</p><p>于是使用批处理来一键启动</p><p>新建.bat文件，使用以下命令</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">start cmd &#x2F;k rabbitmq-server</span><br><span class="line">cd&#x2F;d  D:\tools\ElasticSearch\es-7.6.1\elasticsearch-7.6.1-windows-x86_64\elasticsearch-7.6.1\bin</span><br><span class="line">start cmd &#x2F;k elasticsearch.bat</span><br></pre></td></tr></table></figure><ul><li><p>start 用来启动一个应用</p></li><li><p>cmd /k 表示cmd后面的命令执行完后不关闭窗口。如果要在执行完成后关闭窗口可以用/c </p></li><li><p>cd /d 表示运行到该目录下</p></li></ul><hr><p>参考</p><p><a href="https://www.cnblogs.com/fangjb/p/13275210.html" target="_blank" rel="noopener">https://www.cnblogs.com/fangjb/p/13275210.html</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 脚本 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 脚本 </tag>
+            
+            <tag> 批处理 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Swagger常用注解</title>
+      <link href="/2020/10/23/Swagger%E5%B8%B8%E7%94%A8%E6%B3%A8%E8%A7%A3/"/>
+      <url>/2020/10/23/Swagger%E5%B8%B8%E7%94%A8%E6%B3%A8%E8%A7%A3/</url>
+      
+        <content type="html"><![CDATA[<h2 id="Swagger常用注解"><a href="#Swagger常用注解" class="headerlink" title="Swagger常用注解"></a>Swagger常用注解</h2><p>@ApiModel：在实体类上边使用，标记类时swagger的解析类</p><ul><li><p>value：表示对象名 </p></li><li><p>description：描述</p></li></ul><p>@ApiModelProperty：用于方法，字段； 表示对model属性的说明或者数据操作更改</p><ul><li>value：字段说明 </li><li>name：重写属性名字 </li><li>dataType：重写属性类型 </li><li>required：是否必填 </li><li>example：举例说明 </li><li>hidden：隐藏</li></ul><p>@ApiOperation：用于修饰Controller类中的方法，生成接口方法相关文档信息</p><p>@ApiParam：用于修饰接口中的参数，生成接口参数相关文档信息</p><h3 id="待更新…"><a href="#待更新…" class="headerlink" title="待更新…"></a>待更新…</h3>]]></content>
+      
+      
+      <categories>
+          
+          <category> Swagger </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Java </tag>
+            
+            <tag> Swagger </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Redis主从模式+哨兵配置</title>
       <link href="/2020/09/22/Redis%E4%B8%BB%E4%BB%8E%E6%A8%A1%E5%BC%8F-%E5%93%A8%E5%85%B5%E9%85%8D%E7%BD%AE/"/>
       <url>/2020/09/22/Redis%E4%B8%BB%E4%BB%8E%E6%A8%A1%E5%BC%8F-%E5%93%A8%E5%85%B5%E9%85%8D%E7%BD%AE/</url>
