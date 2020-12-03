@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>前后端分离跨域以及cookie写入问题</title>
+      <link href="/2020/12/03/%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB-cookie/"/>
+      <url>/2020/12/03/%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB-cookie/</url>
+      
+        <content type="html"><![CDATA[<h2 id="SpringBoot-2-4-0项目跨域、Cookie问题"><a href="#SpringBoot-2-4-0项目跨域、Cookie问题" class="headerlink" title="SpringBoot 2.4.0项目跨域、Cookie问题"></a>SpringBoot 2.4.0项目跨域、Cookie问题</h2><h3 id="当时配置如下"><a href="#当时配置如下" class="headerlink" title="当时配置如下"></a>当时配置如下</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GlobalCorsConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> CorsFilter <span class="title">corsFilter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        CorsConfiguration config = <span class="keyword">new</span> CorsConfiguration();</span><br><span class="line">        <span class="comment">//允许所有域名进行跨域调用</span></span><br><span class="line">        config.addAllowedOrigin(<span class="string">"*"</span>);</span><br><span class="line">        <span class="comment">//允许跨越发送cookie</span></span><br><span class="line">        config.setAllowCredentials(<span class="keyword">true</span>);</span><br><span class="line">        <span class="comment">//放行全部原始头信息</span></span><br><span class="line">        config.addAllowedHeader(<span class="string">"*"</span>);</span><br><span class="line">        <span class="comment">//允许所有请求方法跨域调用</span></span><br><span class="line">        config.addAllowedMethod(<span class="string">"*"</span>);</span><br><span class="line">        UrlBasedCorsConfigurationSource source = <span class="keyword">new</span> UrlBasedCorsConfigurationSource();</span><br><span class="line">        source.registerCorsConfiguration(<span class="string">"/**"</span>, config);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> CorsFilter(source);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="遇到以下错误信息"><a href="#遇到以下错误信息" class="headerlink" title="遇到以下错误信息"></a>遇到以下错误信息</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java.lang.IllegalArgumentException: When allowCredentials is <span class="keyword">true</span>, allowedOrigins cannot contain the special value <span class="string">"*"</span>since that cannot be set on the <span class="string">"Access-Control-Allow-Origin"</span> response header. To allow credentials to a set of origins, list them explicitly or consider using <span class="string">"allowedOriginPatterns"</span> instead.</span><br></pre></td></tr></table></figure><p>意思为，配置了allowCredentials为true后，不能将allowedOrigins设置为*，所以在这里将他改为前端域名，即可解决</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config.addAllowedOrigin(<span class="string">"http://localhost:8090"</span>);</span><br></pre></td></tr></table></figure><h3 id="之后，登录成功，发现生成cookie无法写入浏览器中"><a href="#之后，登录成功，发现生成cookie无法写入浏览器中" class="headerlink" title="之后，登录成功，发现生成cookie无法写入浏览器中"></a>之后，登录成功，发现生成cookie无法写入浏览器中</h3><p>在配置好后端后，我前端向后端发送登录请求，请求响应中又set-cookie，但是application中没有cookie</p><p><img src="/" class="lazyload" data-src="/2020/12/03/%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB-cookie/image-20201203200315106.png"  alt="image-20201203200315106"></p><p><img src="/" class="lazyload" data-src="/2020/12/03/%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB-cookie/image-20201203200413936.png"  alt="image-20201203200413936"></p><p>查找资料后发现：</p><p>在前端main.js中加入axios全局配置，允许后端写入cookie到浏览器中，即可解决</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 允许后端将cookie写入</span></span><br><span class="line">axios.defaults.withCredentials = <span class="literal">true</span></span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 记录前后端 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Java </tag>
+            
+            <tag> Cookie </tag>
+            
+            <tag> Vue </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>JWT的介绍和优缺点</title>
       <link href="/2020/12/02/JWT%E7%9A%84%E4%BB%8B%E7%BB%8D%E5%92%8C%E4%BC%98%E7%BC%BA%E7%82%B9/"/>
       <url>/2020/12/02/JWT%E7%9A%84%E4%BB%8B%E7%BB%8D%E5%92%8C%E4%BC%98%E7%BC%BA%E7%82%B9/</url>
